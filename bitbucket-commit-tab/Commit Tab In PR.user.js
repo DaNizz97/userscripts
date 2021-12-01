@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bitbucket Link To Commit
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Adds additional row to commits tab in PR with the links to separate commit page.
 // @author       Daniil Nizovkin
 // @include      https://bitbucket.associatesys.local/projects/TOS/repos/toschart/pull-requests/*
@@ -14,7 +14,6 @@
   'use strict'
   var alreadyAccepted = false
   window.addEventListener('popstate', function (event) {
-    console.log(event)
     const asyncWait = ms => new Promise(resolve => setTimeout(resolve, ms))
     if (event.target.location.pathname.endsWith('commits') && !alreadyAccepted) {
       (async () => {
