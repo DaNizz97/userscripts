@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Bitbucket: Commit Message In Diff
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Creates expandable area with message of selected commit on `diff` tab.
 // @author       Daniil Nizovkin
-// @include      https://bitbucket.associatesys.local/projects/TOS/repos/toschart/pull-requests/*
+// @include      /^https:\/\/bitbucket.associatesys.local\/projects\/[a-zA-Z0-9]+\/repos\/[a-zA-Z0-9]+\/pull-requests\/.*$/
 // @run-at       document-idle
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
@@ -12,8 +12,8 @@
 
 (function () {
   'use strict'
-  var urlRegex = /https:\/\/bitbucket.associatesys.local\/projects\/TOS\/repos\/toschart\/pull-requests\/[0-9]+\/commits\/[a-zA-Z0-9]+#*.*$/
-  var diffUrlRegex = /https:\/\/bitbucket.associatesys.local\/projects\/TOS\/repos\/toschart\/pull-requests\/[0-9]+\/diff+#*.*$/
+  var urlRegex = /^https:\/\/bitbucket.associatesys.local\/projects\/([a-zA-Z0-9]+)\/repos\/([a-zA-Z0-9]+)\/pull-requests\/[0-9]+\/commits\/[a-zA-Z0-9]+#*.*$/
+  var diffUrlRegex = /^https:\/\/bitbucket.associatesys.local\/projects\/[a-zA-Z0-9]+\/repos\/[a-zA-Z0-9]+\/pull-requests\/[0-9]+\/diff+#*.*$/
   var prevCommitHash
   var prevPageIsDiff = urlRegex.test(document.URL)
   var allCommitsDiffWasPrev = diffUrlRegex.test(document.URL)
@@ -50,9 +50,10 @@
     }
     createHTML()
 
+    var match = document.URL.match(urlRegex)
     const xhr = new XMLHttpRequest()
     xhr.responseType = 'json'
-    xhr.open('GET', `/rest/api/1.0/projects/TOS/repos/toschart/commits/${commitHash}`)
+    xhr.open('GET', `/rest/api/1.0/projects/${match[1]}/repos/${match[2]}/commits/${commitHash}`)
     xhr.send()
 
     xhr.onload = function () {

@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Bitbucket Link To Commit
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Adds additional row to commits tab in PR with the links to separate commit page.
 // @author       Daniil Nizovkin
-// @include      https://bitbucket.associatesys.local/projects/TOS/repos/toschart/pull-requests/*
+// @include      /^https:\/\/bitbucket.associatesys.local\/projects\/[a-zA-Z0-9]+\/repos\/[a-zA-Z0-9]+\/pull-requests\/.*$/
 // @run-at       document-idle
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
