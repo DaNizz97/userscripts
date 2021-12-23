@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bitbucket: Commit Message In Diff
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Creates expandable area with message of selected commit on `diff` tab.
 // @author       Daniil Nizovkin
 // @include      /^https:\/\/bitbucket.associatesys.local\/projects\/[a-zA-Z0-9]+\/repos\/[a-zA-Z0-9]+\/pull-requests\/.*$/
@@ -17,6 +17,9 @@
   var prevCommitHash
   var prevPageIsDiff = urlRegex.test(document.URL)
   var allCommitsDiffWasPrev = diffUrlRegex.test(document.URL)
+
+  var commitMessageBlockState = 'none'
+
   window.addEventListener('popstate', function (event) {
     main(event.target.location.href)
   })
@@ -87,9 +90,15 @@
       var messagePre = document.createElement('pre')
       var collapsBtn = document.createElement('button')
 
-      collapsBtn.textContent = 'Show commit message'
+
+      if (commitMessageBlockState === 'block') {
+        collapsBtn.textContent = 'Hide commit message'
+      } else {
+        collapsBtn.textContent = 'Show commit message'
+      }
       collapsBtn.setAttribute('class', 'collapsible css-18u3ks8')
       messageDiv.setAttribute('class', 'commitMsgDiv')
+      messageDiv.style.display = commitMessageBlockState
       parentDiv.setAttribute('class', 'cmtmsgdiv')
       parentDiv.setAttribute('id', 'parentCommitMsgDiv')
       messagePre.setAttribute('id', 'messagePre')
@@ -106,9 +115,11 @@
         if (content.style.display === 'block') {
           content.style.display = 'none'
           collapsBtn.textContent = 'Show commit message'
+          commitMessageBlockState = 'none'
         } else {
           content.style.display = 'block'
           collapsBtn.textContent = 'Hide commit message'
+          commitMessageBlockState = 'block'
         }
       })
     })()
