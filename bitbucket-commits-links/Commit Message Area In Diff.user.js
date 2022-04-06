@@ -4,7 +4,7 @@
 // @version      0.5
 // @description  Creates expandable area with message of selected commit on `diff` tab.
 // @author       Daniil Nizovkin
-// @include      /^https:\/\/bitbucket.associatesys.local\/projects\/[a-zA-Z0-9]+\/repos\/[a-zA-Z0-9]+\/pull-requests\/.*$/
+// @include      /^https:\/\/bitbucket.associatesys.local\/projects\/[a-zA-Z0-9-]+\/repos\/[a-zA-Z0-9]+\/pull-requests\/.*$/
 // @run-at       document-idle
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
@@ -12,8 +12,8 @@
 
 (function () {
   'use strict'
-  var urlRegex = /^https:\/\/bitbucket.associatesys.local\/projects\/([a-zA-Z0-9]+)\/repos\/([a-zA-Z0-9]+)\/pull-requests\/[0-9]+\/commits\/[a-zA-Z0-9]+#*.*$/
-  var diffUrlRegex = /^https:\/\/bitbucket.associatesys.local\/projects\/[a-zA-Z0-9]+\/repos\/[a-zA-Z0-9]+\/pull-requests\/[0-9]+\/diff+#*.*$/
+  var urlRegex = /^https:\/\/bitbucket.associatesys.local\/projects\/([a-zA-Z0-9-]+)\/repos\/([a-zA-Z0-9]+)\/pull-requests\/[0-9]+\/commits\/[a-zA-Z0-9]+#*.*$/
+  var diffUrlRegex = /^https:\/\/bitbucket.associatesys.local\/projects\/[a-zA-Z0-9-]+\/repos\/[a-zA-Z0-9]+\/pull-requests\/[0-9]+\/diff+#*.*$/
   var prevCommitHash
   var prevPageIsDiff = urlRegex.test(document.URL)
   var allCommitsDiffWasPrev = diffUrlRegex.test(document.URL)
